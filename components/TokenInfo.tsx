@@ -119,8 +119,12 @@ export default function TokenInfo({ address }: TokenInfoProps) {
                   alert('MetaMask is not installed');
                   return;
                 }
+                const ethereum = window.ethereum;
+                if (!ethereum) {
+                  return;
+                }
                 try {
-                  await window.ethereum.request({
+                  await ethereum.request({
                     method: 'wallet_watchAsset',
                     params: [{
                       type: 'ERC20',
