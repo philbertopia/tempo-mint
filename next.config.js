@@ -12,6 +12,13 @@ const nextConfig = {
         crypto: false,
       };
     }
+    
+    // Ignore Hardhat config and scripts completely
+    config.module.rules.push({
+      test: /(hardhat\.config\.(js|ts)|scripts\/.*\.(js|ts))$/,
+      use: 'ignore-loader',
+    });
+    
     return config;
   },
 }

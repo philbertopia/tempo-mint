@@ -115,10 +115,14 @@ export default function TokenInfo({ address }: TokenInfoProps) {
           <div>
             <button
               onClick={async () => {
+                if (typeof window === 'undefined' || !window.ethereum) {
+                  alert('MetaMask is not installed');
+                  return;
+                }
                 try {
                   await window.ethereum.request({
                     method: 'wallet_watchAsset',
-                    params: {
+                    params: [{
                       type: 'ERC20',
                       options: {
                         address: tokenInfo.address,
@@ -126,7 +130,7 @@ export default function TokenInfo({ address }: TokenInfoProps) {
                         decimals: tokenInfo.decimals,
                         image: '', // Optional: token image URL
                       },
-                    },
+                    }],
                   });
                   alert(`✅ ${tokenInfo.symbol} token added to MetaMask! You should now see your balance.`);
                 } catch (error: any) {
